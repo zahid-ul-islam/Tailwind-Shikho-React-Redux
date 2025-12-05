@@ -16,11 +16,25 @@ const MONGODB_URI =
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://tailwind-shikho-react-redux.vercel.app",
-      process.env.CLIENT_URL || "",
-    ],
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        "http://localhost:5173",
+        "https://tailwind-shikho-react-redux.vercel.app",
+        process.env.CLIENT_URL,
+      ];
+
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+
+      if (
+        allowedOrigins.includes(origin) ||
+        origin.endsWith(".vercel.app") // Allow all Vercel preview URLs
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
