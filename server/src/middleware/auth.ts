@@ -14,7 +14,10 @@ export const authMiddleware = async (
   next: NextFunction
 ) => {
   try {
-    const token = req.headers.authorization?.replace("Bearer ", "");
+    const token = (req.headers["authorization"] as string)?.replace(
+      "Bearer ",
+      ""
+    );
 
     if (!token) {
       res.status(401).json({ message: "No token provided" });
