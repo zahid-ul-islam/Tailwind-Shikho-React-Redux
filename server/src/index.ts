@@ -15,11 +15,14 @@ const MONGODB_URI =
   "mongodb://localhost:27017/tailwind-design-console";
 
 app.use(
+  cors({
     origin: [
       "http://localhost:5173",
       "https://tailwind-shikho-react-redux.vercel.app",
       process.env.CLIENT_URL || "",
     ],
+    credentials: true,
+  })
 );
 app.use(express.json());
 app.use(cookieParser());
