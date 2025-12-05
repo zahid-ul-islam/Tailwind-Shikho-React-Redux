@@ -16,12 +16,17 @@ const MONGODB_URI =
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
     credentials: true,
   })
 );
 app.use(express.json());
 app.use(cookieParser());
+
+// Root Route (Health Check)
+app.get("/", (req, res) => {
+  res.send("Server is running");
+});
 
 // Routes
 app.use("/api/designs", designRoutes);

@@ -33,7 +33,7 @@ const initialState: DesignsState = {
 export const fetchDesigns = createAsyncThunk(
   "designs/fetchDesigns",
   async () => {
-    const response = await axios.get("http://localhost:5000/api/designs");
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/designs`);
     return response.data;
   }
 );
@@ -46,7 +46,7 @@ export const saveDesign = createAsyncThunk(
     content: string;
   }) => {
     const response = await axios.post(
-      "http://localhost:5000/api/designs",
+      `${import.meta.env.VITE_API_URL}/designs`,
       design
     );
     return response.data;
@@ -63,7 +63,7 @@ export const updateDesign = createAsyncThunk(
     design: { title: string; tailwindClasses: string; content: string };
   }) => {
     const response = await axios.put(
-      `http://localhost:5000/api/designs/${id}`,
+      `${import.meta.env.VITE_API_URL}/designs/${id}`,
       design
     );
     return response.data;
@@ -73,7 +73,7 @@ export const updateDesign = createAsyncThunk(
 export const deleteDesign = createAsyncThunk(
   "designs/deleteDesign",
   async (id: string) => {
-    await axios.delete(`http://localhost:5000/api/designs/${id}`);
+    await axios.delete(`${import.meta.env.VITE_API_URL}/designs/${id}`);
     return id;
   }
 );
